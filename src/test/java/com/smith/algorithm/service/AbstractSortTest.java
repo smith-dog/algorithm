@@ -1,15 +1,17 @@
 package com.smith.algorithm.service;
 
-import static org.junit.jupiter.api.Assertions.*;
-
 import com.smith.algorithm.AlgorithmApplication;
+import java.util.Arrays;
+import java.util.Comparator;
 import java.util.List;
+import java.util.Random;
+import java.util.stream.Stream;
 import javax.annotation.Resource;
 import lombok.extern.slf4j.Slf4j;
+import org.junit.Assert;
 import org.junit.jupiter.api.Test;
 import org.junit.runner.RunWith;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.junit4.SpringRunner;
 
 @Slf4j
@@ -22,9 +24,54 @@ class AbstractSortTest {
 
   @Test
   void sort() {
-    abstractSortList.forEach(abstractSort -> {
-      log.info("current sort : {}" , abstractSort.getClass().getName());
+    Integer[]  arr = generateArrays(Integer.class, 10L, 1L, 100L, true);
+    abstractSortList.forEach(abstractSort -> accept(abstractSort, arr));
+    Long[]  longArr = generateArrays(Long.class, 20000L, 5000L, 100000L, false);
+    abstractSortList.forEach(abstractSort -> accept(abstractSort, longArr));
+  }
 
-    });
+  private static <T extends Comparable<T>> void accept(AbstractSort abstractSort, T[] a) {
+    long start = System.currentTimeMillis();
+    abstractSort.sort(a);
+    log.info("SortName({}):time({}ms):", abstractSort.getClass().getSimpleName() , System.currentTimeMillis() -start);
+    checkSort(a);
+  }
+
+
+  /**
+   *
+   * @param <T>
+   * @param count
+   * @param min
+   * @param max
+   * @return
+   */
+  private <T extends Comparable<T>> T[] generateArrays(Class<T> cls, Long count, Long min, Long max, boolean isSort) {
+    Random random  = new Random();
+    if (Long.class.equals(cls)) {
+      if (isSort) {
+        return (T[]) random.longs(count, min, max).boxed().sorted().toArray(Long[]::new);
+      } else {
+        return (T[]) random.longs(count, min, max).boxed().toArray(Long[]::new);
+      }
+    } else if (Double.class.equals(cls)) {
+      if (isSort) {
+        return (T[]) random.doubles(count, min, max).boxed().sorted().toArray(Double[]::new);
+      } else {
+        return (T[]) random.doubles(count, min, max).boxed().toArray(Double[]::new);
+      }
+    } else {
+      if (isSort) {
+        return (T[]) random.ints(count, min.intValue(), max.intValue()).boxed().sorted().toArray(Integer[]::new);
+      } else {
+        return (T[]) random.ints(count, min.intValue(), max.intValue()).boxed().toArray(Integer[]::new);
+      }
+    }
+  }
+
+  private static <T extends Comparable<T>> void checkSort(T[] a) {
+    for (int i = 0 ; i < a.length - 1; i++) {
+      Assert.assertTrue(a[i].compareTo(a[i+1]) <= 0);
+    }
   }
 }
