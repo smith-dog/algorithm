@@ -5,6 +5,7 @@ import java.util.Arrays;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Random;
+import java.util.concurrent.ThreadLocalRandom;
 import java.util.stream.Stream;
 import javax.annotation.Resource;
 import lombok.extern.slf4j.Slf4j;
@@ -22,12 +23,15 @@ class AbstractSortTest {
   @Resource
   List<AbstractSort> abstractSortList;
 
+
+  ThreadLocalRandom threadLocalRandom = ThreadLocalRandom.current();
+
   @Test
   void sort() {
-    Integer[]  arr = generateArrays(Integer.class, 10L, 1L, 100L, true);
+    Integer[]  arr = generateArrays(Integer.class, 10L, 1L, 100L, false);
     abstractSortList.forEach(abstractSort -> accept(abstractSort, arr));
-    Long[]  longArr = generateArrays(Long.class, 20000L, 5000L, 100000L, false);
-    abstractSortList.forEach(abstractSort -> accept(abstractSort, longArr));
+    /*Long[]  longArr = generateArrays(Long.class, 20000L, 5000L, 100000L, false);
+    abstractSortList.forEach(abstractSort -> accept(abstractSort, longArr));*/
   }
 
   private static <T extends Comparable<T>> void accept(AbstractSort abstractSort, T[] a) {
@@ -47,24 +51,24 @@ class AbstractSortTest {
    * @return
    */
   private <T extends Comparable<T>> T[] generateArrays(Class<T> cls, Long count, Long min, Long max, boolean isSort) {
-    Random random  = new Random();
+
     if (Long.class.equals(cls)) {
       if (isSort) {
-        return (T[]) random.longs(count, min, max).boxed().sorted().toArray(Long[]::new);
+        return (T[]) threadLocalRandom.longs(count, min, max).boxed().sorted().toArray(Long[]::new);
       } else {
-        return (T[]) random.longs(count, min, max).boxed().toArray(Long[]::new);
+        return (T[]) threadLocalRandom.longs(count, min, max).boxed().toArray(Long[]::new);
       }
     } else if (Double.class.equals(cls)) {
       if (isSort) {
-        return (T[]) random.doubles(count, min, max).boxed().sorted().toArray(Double[]::new);
+        return (T[]) threadLocalRandom.doubles(count, min, max).boxed().sorted().toArray(Double[]::new);
       } else {
-        return (T[]) random.doubles(count, min, max).boxed().toArray(Double[]::new);
+        return (T[]) threadLocalRandom.doubles(count, min, max).boxed().toArray(Double[]::new);
       }
     } else {
       if (isSort) {
-        return (T[]) random.ints(count, min.intValue(), max.intValue()).boxed().sorted().toArray(Integer[]::new);
+        return (T[]) threadLocalRandom.ints(count, min.intValue(), max.intValue()).boxed().sorted().toArray(Integer[]::new);
       } else {
-        return (T[]) random.ints(count, min.intValue(), max.intValue()).boxed().toArray(Integer[]::new);
+        return (T[]) threadLocalRandom.ints(count, min.intValue(), max.intValue()).boxed().toArray(Integer[]::new);
       }
     }
   }
