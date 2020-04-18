@@ -28,7 +28,7 @@ class AbstractSortTest {
 
   @Test
   void sort() {
-    Integer[]  arr = generateArrays(Integer.class, 10L, 1L, 100L, false);
+    Integer[]  arr = generateArrays(Integer.class, 100000L, 1L, 200000L, false);
     abstractSortList.forEach(abstractSort -> accept(abstractSort, arr));
     /*Long[]  longArr = generateArrays(Long.class, 20000L, 5000L, 100000L, false);
     abstractSortList.forEach(abstractSort -> accept(abstractSort, longArr));*/
