@@ -1,14 +1,17 @@
 package com.smith.algorithm.service.impl;
 
 import com.smith.algorithm.service.AbstractSort;
+import java.util.concurrent.ThreadLocalRandom;
 import org.springframework.stereotype.Component;
 
 /**
- * 该实现容易发生栈溢出
+ * 快速排序随机基准优化
  * @author smith
  */
 @Component
 public class QuickRandomSort extends AbstractSort {
+
+  ThreadLocalRandom threadLocalRandom = ThreadLocalRandom.current();
 
   @Override
   public <T extends Comparable<T>> void sort(T[] arr) {
@@ -22,7 +25,7 @@ public class QuickRandomSort extends AbstractSort {
     }
 
     // 获取一个随机基准并且和left交换
-
+    swap(arr, left, threadLocalRandom.nextInt(left, right));
     // 选择一个基准
     int index = left;
     for (int i = left + 1; i <= right; i ++) {

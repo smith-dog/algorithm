@@ -5,7 +5,7 @@ import java.util.concurrent.ThreadLocalRandom;
 import org.springframework.stereotype.Component;
 
 /**
- * 该实现容易发生栈溢出
+ * 三路快排
  *
  * @author smith
  */
