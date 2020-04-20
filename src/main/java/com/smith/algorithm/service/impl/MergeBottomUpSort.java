@@ -9,13 +9,13 @@ import org.springframework.stereotype.Component;
  * @author smith
  */
 @Component
-public class MergeBottomUpSort extends AbstractSort {
+public class MergeBottomUpSort <T extends Comparable<T>> extends AbstractSort<T> {
 
   @Override
-  public <T extends Comparable<T>> void sort(T[] arr) {
+  public void sort(T[] arr) {
     int len = arr.length;
     // 自底向上
-    Comparable[] temp = Arrays.copyOf(arr, arr.length);
+    T[] temp = Arrays.copyOf(arr, arr.length);
     for (int step = 1; step <= len; step += step) {
       // 划分区间
       for (int index = 0; index < len; index += step + step) {
@@ -25,18 +25,18 @@ public class MergeBottomUpSort extends AbstractSort {
         for (int k = l; k <= r; k++) {
           // 如果左半部分元素已经全部处理完毕
           if (i > mid) {
-            arr[k] = (T) temp[j];
+            arr[k] = temp[j];
             j++;
           } else if (j > r) {
             // 如果右半部分元素已经全部处理完毕
-            arr[k] = (T) temp[i];
+            arr[k] =  temp[i];
             i++;
           } else if (temp[i].compareTo(temp[j]) < 0) {
             // 左半部分所指元素 < 右半部分所指元素
-            arr[k] = (T) temp[i];
+            arr[k] = temp[i];
             i++;
           } else {  // 左半部分所指元素 >= 右半部分所指元素
-            arr[k] = (T) temp[j];
+            arr[k] = temp[j];
             j++;
           }
         }

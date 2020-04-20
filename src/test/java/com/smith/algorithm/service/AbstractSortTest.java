@@ -1,12 +1,8 @@
 package com.smith.algorithm.service;
 
 import com.smith.algorithm.AlgorithmApplication;
-import java.util.Arrays;
-import java.util.Comparator;
 import java.util.List;
-import java.util.Random;
 import java.util.concurrent.ThreadLocalRandom;
-import java.util.stream.Stream;
 import javax.annotation.Resource;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.Assert;
@@ -28,7 +24,7 @@ class AbstractSortTest {
 
   @Test
   void sort() {
-    Integer[]  arr = generateArrays(Integer.class, 100000L, 1L, 200000L, false);
+    Integer[] arr = generateArrays(Integer.class, 100000L, 1L, 200000L, false);
     abstractSortList.forEach(abstractSort -> accept(abstractSort, arr));
     /*Long[]  longArr = generateArrays(Long.class, 20000L, 5000L, 100000L, false);
     abstractSortList.forEach(abstractSort -> accept(abstractSort, longArr));*/
@@ -37,13 +33,12 @@ class AbstractSortTest {
   private static <T extends Comparable<T>> void accept(AbstractSort abstractSort, T[] a) {
     long start = System.currentTimeMillis();
     abstractSort.sort(a);
-    log.info("SortName({}):time({}ms):", abstractSort.getClass().getSimpleName() , System.currentTimeMillis() -start);
+    log.info("SortName({}):time({}ms):", abstractSort.getClass().getSimpleName(), System.currentTimeMillis() - start);
     checkSort(a);
   }
 
 
   /**
-   *
    * @param <T>
    * @param count
    * @param min
@@ -74,8 +69,8 @@ class AbstractSortTest {
   }
 
   private static <T extends Comparable<T>> void checkSort(T[] a) {
-    for (int i = 0 ; i < a.length - 1; i++) {
-      Assert.assertTrue(a[i].compareTo(a[i+1]) <= 0);
+    for (int i = 0; i < a.length - 1; i++) {
+      Assert.assertTrue(a[i].compareTo(a[i + 1]) <= 0);
     }
   }
 }

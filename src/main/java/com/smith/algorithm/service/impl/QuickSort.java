@@ -8,15 +8,15 @@ import org.springframework.stereotype.Component;
  * @author smith
  */
 @Component
-public class QuickSort extends AbstractSort {
+public class QuickSort <T extends Comparable<T>> extends AbstractSort<T>{
 
   @Override
-  public <T extends Comparable<T>> void sort(T[] arr) {
+  public void sort(T[] arr) {
     int n = arr.length;
     sort(arr, 0, n-1);
   }
 
-  public <T extends Comparable<T>> void sort(T[] arr , int left , int right){
+  public void sort(T[] arr , int left , int right){
     if (left >= right) {
       return;
     }

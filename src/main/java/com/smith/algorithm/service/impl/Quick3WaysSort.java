@@ -10,17 +10,17 @@ import org.springframework.stereotype.Component;
  * @author smith
  */
 @Component
-public class Quick3WaysSort extends AbstractSort {
+public class Quick3WaysSort <T extends Comparable<T>> extends AbstractSort<T>{
 
   ThreadLocalRandom threadLocalRandom = ThreadLocalRandom.current();
 
   @Override
-  public <T extends Comparable<T>> void sort(T[] arr) {
+  public void sort(T[] arr) {
     int n = arr.length;
     sort(arr, 0, n - 1);
   }
 
-  public <T extends Comparable<T>> void sort(T[] arr, int left, int right) {
+  public void sort(T[] arr, int left, int right) {
     if (left >= right) {
       return;
     }
@@ -35,11 +35,11 @@ public class Quick3WaysSort extends AbstractSort {
     int i = left + 1;
     // 选择最左节点为基准一个基准
     while (i < gt) {
-      if (arr[i].compareTo(arr[left]) < 0) {
+      if (arr[i].compareTo((T) arr[left]) < 0) {
         swap(arr, i, lt+1);
         i ++;
         lt ++;
-      } else if (arr[i].compareTo(arr[left]) > 0) {
+      } else if (arr[i].compareTo((T) arr[left]) > 0) {
         swap(arr, i,  gt-1);
         gt--;
       } else {

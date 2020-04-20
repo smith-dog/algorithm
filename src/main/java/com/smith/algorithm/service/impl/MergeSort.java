@@ -9,10 +9,10 @@ import org.springframework.stereotype.Component;
  * @author smith
  */
 @Component
-public class MergeSort extends AbstractSort {
+public class MergeSort <T extends Comparable<T>> extends AbstractSort<T> {
 
   @Override
-  public <T extends Comparable<T>> void sort(T[] arr) {
+  public void sort(T[] arr) {
     int n = arr.length;
     sort(arr, 0, n - 1);
   }
@@ -24,9 +24,9 @@ public class MergeSort extends AbstractSort {
    * @param mid
    * @param r
    */
-  private static void merge(Comparable[] arr, int l, int mid, int r) {
+  private void merge(T[] arr, int l, int mid, int r) {
 
-    Comparable[] aux = Arrays.copyOfRange(arr, l, r + 1);
+    T[] aux = Arrays.copyOfRange(arr, l, r + 1);
 
     // 初始化，i指向左半部分的起始索引位置l；j指向右半部分起始索引位置mid+1
     int i = l, j = mid + 1;
@@ -56,7 +56,7 @@ public class MergeSort extends AbstractSort {
    * @param l
    * @param r
    */
-  private static void sort(Comparable[] arr, int l, int r) {
+  private void sort(T[] arr, int l, int r) {
     if (l >= r) {
       return;
     }

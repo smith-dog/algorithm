@@ -7,10 +7,10 @@ import org.springframework.stereotype.Component;
  * @author smith
  */
 @Component
-public class InsertSort extends AbstractSort {
+public class InsertSort <T extends Comparable<T>> extends AbstractSort<T> {
 
   @Override
-  public <T extends Comparable<T>> void sort(T[] arr) {
+  public void sort(T[] arr) {
     // 从第1个元素开始往前，如果比前面的元素小，那么交换位置
     for (int i = 0; i < arr.length; i++) {
       /// 写法1

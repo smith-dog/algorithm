@@ -9,17 +9,17 @@ import org.springframework.stereotype.Component;
  * @author smith
  */
 @Component
-public class QuickRandomSort extends AbstractSort {
+public class QuickRandomSort <T extends Comparable<T>> extends AbstractSort<T>{
 
   ThreadLocalRandom threadLocalRandom = ThreadLocalRandom.current();
 
   @Override
-  public <T extends Comparable<T>> void sort(T[] arr) {
+  public void sort(T[] arr) {
     int n = arr.length;
     sort(arr, 0, n-1);
   }
 
-  public <T extends Comparable<T>> void sort(T[] arr , int left , int right){
+  public void sort(T[] arr , int left , int right){
     if (left >= right) {
       return;
     }

@@ -10,10 +10,10 @@ import org.springframework.stereotype.Component;
  */
 @Slf4j
 @Component
-public class SelectionSort extends AbstractSort {
+public class SelectionSort <T extends Comparable<T>> extends AbstractSort<T> {
 
   @Override
-  public <T extends Comparable<T>> void  sort(T[] arr) {
+  public void  sort(T[] arr) {
     int n = arr.length;
     for (int i = 0; i < n; i++) {
       // 寻找[i, n)区间里的最小值的索引
