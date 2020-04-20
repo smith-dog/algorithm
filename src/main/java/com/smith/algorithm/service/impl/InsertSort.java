@@ -20,7 +20,6 @@ public class InsertSort <T extends Comparable<T>> extends AbstractSort<T> {
         } else {
           break;
         }
-
       }*/
       /// 写法2
       /*for( int j = i; j > 0 && arr[j].compareTo(arr[j-1]) < 0 ; j--) {
